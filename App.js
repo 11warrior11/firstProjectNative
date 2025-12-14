@@ -14,9 +14,7 @@ export default function App() {
   const [font, setFont] = useState(false);
 
   if (font) {
-    return (
-      <MainStack/>
-    );
+    return <MainStack />;
   } else {
     return (
       <AppLoading

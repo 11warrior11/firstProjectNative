@@ -11,9 +11,10 @@ import {
 } from "react-native";
 import { gStyle } from "../styles/style";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import Form from "./Form";
 
 export default function Main({ navigation }) {
-  const [news, serNews] = useState([
+  const [news, setNews] = useState([
     {
       name: "Google",
       anons: "Google!!",
@@ -39,6 +40,14 @@ export default function Main({ navigation }) {
 
   const [modalWindow, setModalWindow] = useState(false);
 
+  const addArticle = (article) => {
+    setNews((list) => {
+      article.key = Math.random().toString(36);
+      return [article, ...list];
+    });
+    setModalWindow(false)
+  };
+
   return (
     <View style={gStyle.main}>
       <Modal visible={modalWindow}>
@@ -51,6 +60,7 @@ export default function Main({ navigation }) {
             onPress={() => setModalWindow(false)}
           />
           <Text style={styles.title}>Форма добавления статей</Text>
+          <Form addArticle={addArticle}/>
         </View>
       </Modal>
       <Ionicons
@@ -58,7 +68,7 @@ export default function Main({ navigation }) {
         size={34}
         color="green"
         style={styles.iconAdd}
-         onPress={() => setModalWindow(true)}
+        onPress={() => setModalWindow(true)}
       />
       <Text style={[gStyle.title, styles.header]}>Главная страница</Text>
       <FlatList
